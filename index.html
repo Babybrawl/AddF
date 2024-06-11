@@ -8,13 +8,13 @@
     <script>
         async function envoyerFormulaire(event) {
             event.preventDefault();
-
+    
             const titre = document.getElementById('titre').value;
             const image = document.getElementById('image').value;
             const link = document.getElementById('link').value;
             const description = document.getElementById('description').value;
             const tag = document.getElementById('tag').value;
-
+    
             const data = {
                 type: 'film',
                 titre,
@@ -23,16 +23,16 @@
                 description,
                 tag
             };
-
+    
             try {
-                const response = await fetch('http://localhost:3000/ajouterFilm', {
+                const response = await fetch('/ajouterFilm', {  // Utilisez une URL relative
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
                 });
-
+    
                 if (response.ok) {
                     const result = await response.text();
                     alert(result);
@@ -47,6 +47,7 @@
             }
         }
     </script>
+    
 </head>
 <body>
     <h1>Ajouter un film</h1>

@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
-const cors = require('cors'); // Import the cors package
+const cors = require('cors');
+const { MongoClient } = require('mongodb');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Utilisez le port de l'environnement si disponible
 
 // Middleware to allow cross-origin requests
 app.use(cors());
@@ -14,9 +15,7 @@ app.use(express.static(path.join(__dirname)));
 // Middleware to parse JSON data
 app.use(express.json());
 
-// Replace "votre-uri-mongodb" with your MongoDB URI
 const mongoURI = "mongodb+srv://nicolasbabybrawl:QDRGrf8sq2OMtCKH@babybrawl.aod6irz.mongodb.net/Films_dataBase?retryWrites=true&w=majority&appName=Babybrawl";
-const { MongoClient } = require('mongodb');
 const client = new MongoClient(mongoURI);
 
 // Connect to the MongoDB database
@@ -31,7 +30,7 @@ async function connectMongoDB() {
 connectMongoDB();
 
 // Endpoint to add a new film
-app.post('/ajouterFilm', async (req, res) => {
+app.post('/api/ajouterFilm', async (req, res) => {
     try {
         const { titre, image, link, description, tag } = req.body;
         console.log('Request received with data:', req.body);
