@@ -12,6 +12,10 @@
       {
         "src": "styles.css",
         "use": "@vercel/static"
+      },
+      {
+        "src": "favicon.ico",
+        "use": "@vercel/static"
       }
     ],
     "routes": [
