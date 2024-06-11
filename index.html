@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un film</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        async function envoyerFormulaire(event) {
+            event.preventDefault();
+
+            const titre = document.getElementById('titre').value;
+            const image = document.getElementById('image').value;
+            const link = document.getElementById('link').value;
+            const description = document.getElementById('description').value;
+            const tag = document.getElementById('tag').value;
+
+            const data = {
+                type: 'film',
+                titre,
+                image,
+                link,
+                description,
+                tag
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/ajouterFilm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    alert(result);
+                } else {
+                    const errorText = await response.text();
+                    console.error('Erreur lors de l\'ajout:', errorText);
+                    alert('Erreur lors de l\'ajout du film');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'ajout du film');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Ajouter un film</h1>
+    <form id="ajoutForm" onsubmit="envoyerFormulaire(event)">
+        <label for="titre">Titre :</label>
+        <input type="text" id="titre" name="titre" required>
+        <br>
+        <label for="image">Image :</label>
+        <input type="text" id="image" name="image" value="image/" required>
+        <br>
+        <label for="link">Lien :</label>
+        <input type="text" id="link" name="link" required>
+        <br>
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+        <br>
+        <label for="tag">Tag :</label>
+        <select id="tag" name="tag">
+            <option value="action">Action</option>
+            <option value="horreur">Horreur</option>
+            <option value="comedie">Comédie</option>
+            <option value="romantiques/drama">Romantiques/Drama</option>
+            <!-- Ajoutez d'autres options au besoin -->
+        </select>
+        <br>
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>
